@@ -29,6 +29,101 @@ h3 {
   font-size: 24px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --azul: #006da5;
+  --turquesa: #43b8bf;
+  --naranja: #ffa51f;
+  --verde: #a8c52a;
+  --coral: #f4512a;
+  --rosa: #f64e78;
+
+  --fondo: #f5fafb;
+  --texto: #24343d;
+  --texto-suave: #64727a;
+  --borde: #d7e4e7;
+}
+
+body {
+  margin: 0;
+  padding: 35px;
+  font-family: Arial, sans-serif;
+  color: var(--texto);
+
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(67, 184, 191, 0.12),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 165, 31, 0.1),
+      transparent 40%
+    ),
+    var(--fondo);
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Cabecera */
+
+.cabecera-app {
+  margin-bottom: 35px;
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 10px 28px rgba(0, 109, 165, 0.1);
+}
+
+.barra-colores {
+  height: 8px;
+
+  background: linear-gradient(
+    90deg,
+    var(--coral) 0%,
+    var(--naranja) 20%,
+    var(--verde) 40%,
+    var(--turquesa) 65%,
+    var(--azul) 100%
+  );
+}
+
+.cabecera-app h1 {
+  margin: 30px 30px 10px;
+  color: var(--azul);
+  font-size: 40px;
+  text-align: center;
+}
+
+.subtitulo-app {
+  max-width: 700px;
+  margin: 0 auto 30px;
+  padding: 0 25px;
+  color: var(--texto-suave);
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+h3 {
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 6px;
+  padding-bottom: 5px;
+  color: var(--azul);
+  font-size: 24px;
+  border-bottom: 4px solid var(--turquesa);
+}
+
 button,
 input,
 select {
@@ -36,16 +131,29 @@ select {
 }
 
 button {
-  padding: 10px 16px;
-  font-size: 16px;
-  border: 1px solid #999999;
-  border-radius: 6px;
-  background-color: white;
+  padding: 11px 18px;
+  font-size: 15px;
+  font-weight: 600;
+
+  border: none;
+  border-radius: 8px;
+
   cursor: pointer;
+
+  transition:
+    all .20s ease;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,.08);
 }
 
-button:hover {
-  background-color: #eeeeee;
+button:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.15);
+
 }
 
 button:disabled {
@@ -406,3 +514,490 @@ input[type="file"] {
     width: 100%;
   }
 } 
+/* ======================================================
+   FUENTES PERSONALIZADAS
+====================================================== */
+
+.descripcion-fuentes {
+  margin-top: 0;
+  margin-bottom: 16px;
+
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 400;
+
+  color: var(--texto);
+}
+
+.lista-fuentes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  margin-top: 16px;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.mensaje-fuentes {
+  margin-top: 16px;
+  margin-bottom: 0;
+
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 400;
+
+  color: var(--texto);
+}
+
+.boton-subir-fuente {
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 12px;
+
+  padding: 11px 18px;
+
+  background: var(--azul);
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.2s ease;
+
+}
+
+.boton-subir-fuente:hover{
+
+  background:#005685;
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,.15);
+
+}
+
+.boton-subir-fuente:active{
+
+  transform:translateY(0);
+
+  box-shadow:
+    0 3px 8px rgba(0,0,0,.12);
+
+}
+
+.etiqueta-fuente {
+
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:9px 14px;
+
+  border:1px solid #d6e2e5;
+  border-radius:22px;
+
+  background:#f8fbfc;
+
+  font-size:14px;
+
+  color:var(--texto);
+
+}
+
+.etiqueta-fuente button{
+
+  width:22px;
+  height:22px;
+
+  padding:0;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:transparent;
+
+  color:#666;
+
+  font-size:15px;
+
+  cursor:pointer;
+
+  box-shadow:none;
+
+}
+
+.etiqueta-fuente button:hover{
+
+  background:#e9f2f5;
+
+  transform:none;
+
+}
+/* ======================================================
+   COLORES DE BOTONES
+====================================================== */
+
+/* Principal */
+
+#descargar{
+
+  background:#006da5;
+  color:white;
+
+}
+
+#descargar:hover{
+
+  background:#005685;
+
+}
+
+
+/* Descargar todos */
+
+#descargarTodos{
+
+  background:#ffa51f;
+  color:white;
+
+}
+
+#descargarTodos:hover{
+
+  background:#ec9514;
+
+}
+
+
+/* Guardar plantilla */
+
+#guardarConfiguracion{
+
+  background:#43b8bf;
+  color:white;
+
+}
+
+#guardarConfiguracion:hover{
+
+  background:#2ea7ae;
+
+}
+
+
+/* Navegación */
+
+#certificadoAnterior,
+#certificadoSiguiente{
+
+  background:white;
+
+  color:#006da5;
+
+  border:1px solid #cfdcdf;
+
+}
+
+
+/* Mostrar nombre */
+
+#boton{
+
+  background:#a8c52a;
+
+  color:white;
+
+}
+
+#boton:hover{
+
+  background:#92af1d;
+
+}
+/* Cargar plantilla */
+
+.boton-cargar-configuracion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 11px 18px;
+
+  background: var(--azul);
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, .08);
+
+  transition:
+    all .20s ease;
+}
+
+.boton-cargar-configuracion:hover {
+  background: #005685;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, .15);
+}
+
+.boton-cargar-configuracion:active {
+  transform: translateY(0);
+
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, .12);
+}
+/* ======================================================
+   BARRA DE ESTADO
+====================================================== */
+
+.estado-app{
+
+  display:flex;
+
+  gap:16px;
+
+  margin-bottom:30px;
+
+}
+
+.estado-card {
+
+  position: relative;
+
+  flex: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  background: white;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 6px 18px rgba(0,109,165,.08);
+
+  overflow: hidden;
+
+}
+.estado-card::before {
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:0;
+
+  width:100%;
+  height:6px;
+
+  background:#d9d9d9;
+
+  transition:all .30s ease;
+
+}
+/* Estados */
+
+.estado-card.pendiente::before{
+
+  background:
+  linear-gradient(
+    90deg,
+    #ff8c42,
+    #ffc107
+  );
+
+}
+
+.estado-card.correcto::before{
+
+  background:
+  linear-gradient(
+    90deg,
+    #59c173,
+    #2ecc71
+  );
+
+}
+
+.estado-card.info::before{
+
+  background:
+  linear-gradient(
+    90deg,
+    #43b8bf,
+    #006da5
+  );
+
+}
+.estado-titulo{
+
+  display:block;
+
+  margin-bottom:3px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  text-transform:uppercase;
+
+  letter-spacing:1px;
+
+  color:#7f8b95;
+
+}
+.estado-valor{
+
+  display:block;
+
+  margin-top:2px;
+
+  font-size:18px;
+
+  font-weight:700;
+
+  color:var(--azul);
+
+}
+/* ======================================================
+   EDITOR EN DOS COLUMNAS
+====================================================== */
+
+.editor-dos-columnas {
+  display: grid;
+  grid-template-columns:
+    minmax(380px, 42%)
+    minmax(500px, 58%);
+
+  gap: 28px;
+  align-items: start;
+}
+
+.panel-editor,
+.panel-vista-previa {
+  min-width: 0;
+}
+
+.panel-vista-previa{
+  position: sticky;
+  top: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  align-self: start;
+}
+}
+
+.panel-vista-previa .bloque-editor{
+  margin: 0;
+}
+
+/* Adaptación para pantallas pequeñas */
+
+@media (max-width: 950px) {
+  .editor-dos-columnas {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-vista-previa {
+    position: static;
+  }
+}
+/* Ocultar la imagen mientras no tenga una plantilla cargada */
+
+#plantilla:not([src]),
+#plantilla[src=""] {
+  display: none;
+}
+
+/* Altura provisional antes de cargar la plantilla */
+
+.certificado {
+  min-height: 320px;
+  border: 2px dashed var(--borde);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(67, 184, 191, 0.05),
+      rgba(255, 165, 31, 0.05)
+    ),
+    white;
+}
+
+/* Cuando ya existe una imagen, recuperar el aspecto normal */
+
+.certificado:has(#plantilla[src]:not([src=""])) {
+  min-height: 0;
+  border: none;
+  background: white;
+}
+.guardar-plantilla{
+  margin-top: 0px;
+}
+/* Ajustes para el panel editor estrecho */
+
+.panel-editor .panel-controles {
+  grid-template-columns: 1fr;
+}
+
+.panel-editor .control-tamano {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    82px
+    auto;
+
+  gap: 10px;
+  width: 100%;
+}
+
+.panel-editor .control-tamano input[type="range"] {
+  width: 100%;
+  min-width: 0;
+}
+
+.panel-editor .control-tamano input[type="number"] {
+  width: 82px;
+  min-width: 0;
+}
+
+.panel-editor input,
+.panel-editor select {
+  max-width: 100%;
+}

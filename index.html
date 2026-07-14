@@ -16,83 +16,195 @@
   <body>
     <div class="contenedor">
 
-      <h1>Generador de certificados</h1>
+      <header class="cabecera-app">
 
-      <!-- BASE DE DATOS -->
-      <section class="bloque-editor">
-        <h3>Base de datos</h3>
+  <div class="barra-colores"></div>
+
+  <h1>Editor de certificados</h1>
+
+  <p class="subtitulo-app">
+    Diseña, personaliza y genera certificados individuales o masivos a partir de una base de datos.
+  </p>
+
+</header>
+
+      <section class="estado-app">
+
+  <div class="estado-card pendiente">
+
+    <span class="estado-icono">📊</span>
+
+    <div>
+      <span class="estado-titulo">Base de datos</span>
+      <span id="estadoResumenExcel" class="estado-valor">
+        Pendiente
+      </span>
+    </div>
+
+  </div>
+
+  <div class="estado-card pendiente">
+
+    <span class="estado-icono">🖼️</span>
+
+    <div>
+      <span class="estado-titulo">Plantilla</span>
+      <span id="estadoResumenPlantilla" class="estado-valor">
+        Pendiente
+      </span>
+    </div>
+
+  </div>
+
+  <div class="estado-card info">
+
+    <span class="estado-icono">🔤</span>
+
+    <div>
+      <span class="estado-titulo">Fuentes</span>
+      <span id="estadoResumenFuentes" class="estado-valor">
+        Ninguna
+      </span>
+    </div>
+
+  </div>
+
+  <div class="estado-card pendiente">
+
+    <span class="estado-icono">👥</span>
+
+    <div>
+      <span class="estado-titulo">Participantes</span>
+      <span id="estadoResumenParticipantes" class="estado-valor">
+        0
+      </span>
+    </div>
+
+  </div>
+
+</section>
+<div class="editor-dos-columnas">
+
+  <main class="panel-editor">
+
+    <!-- BASE DE DATOS -->
+    <section class="bloque-editor">
+      <h3>Base de datos</h3>
+
+      <label
+        class="titulo-campo"
+        for="subirExcel"
+      >
+        Selecciona el archivo Excel:
+      </label>
+
+      <input
+        type="file"
+        id="subirExcel"
+        accept=".xlsx,.xls,.csv"
+      >
+
+      <p id="estadoExcel">
+        Todavía no se ha cargado ningún archivo.
+      </p>
+
+      <div class="panel-controles">
+
+        <div class="grupo-control">
+          <label for="selectorParticipante">
+            Participante
+          </label>
+
+          <select
+            id="selectorParticipante"
+            disabled
+          >
+            <option value="">
+              Primero carga un archivo Excel
+            </option>
+          </select>
+        </div>
+
+        <div class="grupo-control">
+          <label>
+            Código de orden
+          </label>
+
+          <div id="codigoActual">
+            —
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="bloque-editor">
+      <h3>Plantillas</h3>
+
+      <p class="descripcion-seccion">
+        Carga una plantilla para continuar trabajando sobre una configuración existente.
+      </p>
+
+      <div class="fila-configuracion">
 
         <label
-          class="titulo-campo"
-          for="subirExcel"
+          for="cargarConfiguracion"
+          class="boton-cargar-configuracion"
+          role="button"
         >
-          Selecciona el archivo Excel:
+          📂 Cargar plantilla
         </label>
 
         <input
           type="file"
-          id="subirExcel"
-          accept=".xlsx,.xls,.csv"
+          id="cargarConfiguracion"
+          accept=".json"
+          hidden
         >
 
-        <p id="estadoExcel">
-          Todavía no se ha cargado ningún archivo.
+      </div>
+
+      <p id="estadoConfiguracion">
+        No se ha cargado ninguna plantilla.
+      </p>
+    </section>
+    
+
+    <!-- FUENTES PERSONALIZADAS -->
+    <section class="bloque-editor">
+      <h3>Fuentes personalizadas</h3>
+
+      <p class="descripcion-seccion">
+        Añade tipografías para utilizarlas en el nombre, los párrafos o la fecha.
+      </p>
+
+      <label
+        for="subirFuente"
+        class="boton-subir-fuente"
+      >
+        + Añadir fuente
+      </label>
+
+      <input
+        type="file"
+        id="subirFuente"
+        accept=".ttf,.otf,.woff,.woff2"
+        multiple
+        hidden
+      >
+
+      <div
+        id="listaFuentes"
+        class="lista-fuentes"
+      >
+        <p
+          id="estadoFuente"
+          class="mensaje-fuentes"
+        >
+          No se ha cargado ninguna fuente personalizada.
         </p>
-
-        <div class="panel-controles">
-
-          <div class="grupo-control">
-            <label for="selectorParticipante">
-              Participante
-            </label>
-
-            <select
-              id="selectorParticipante"
-              disabled
-            >
-              <option value="">
-                Primero carga un archivo Excel
-              </option>
-            </select>
-          </div>
-
-          <div class="grupo-control">
-            <label>
-              Código de orden
-            </label>
-
-            <div id="codigoActual">
-              —
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- FUENTES -->
-<section class="bloque-editor">
-  <h3>Fuentes personalizadas</h3>
-
-  <label
-    class="titulo-campo"
-    for="subirFuente"
-  >
-    Añadir una fuente:
-  </label>
-
-  <input
-    type="file"
-    id="subirFuente"
-    accept=".ttf,.otf,.woff,.woff2"
-    multiple
-  >
-
-  <p id="estadoFuente">
-    No hay fuentes personalizadas cargadas.
-  </p>
-
-  <div id="listaFuentes"></div>
-</section>
+      </div>
+    </section>
 
       <!-- NOMBRE -->
       <section class="bloque-editor">
@@ -192,439 +304,439 @@
       </section>
 
       <!-- PRIMER PÁRRAFO -->
-      <section class="bloque-editor">
-        <h3>Primer párrafo</h3>
+<section class="bloque-editor">
+  <h3>Primer párrafo</h3>
 
-        <label class="titulo-campo">
-          Texto del primer párrafo:
-        </label>
+  <label class="titulo-campo">
+    Texto del primer párrafo:
+  </label>
 
-        <div class="barra-editor">
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoContenido"
-            data-comando="bold"
-            title="Negrita"
-          >
-            <strong>B</strong>
-          </button>
+  <div class="barra-editor">
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoContenido"
+      data-comando="bold"
+      title="Negrita"
+    >
+      <strong>B</strong>
+    </button>
 
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoContenido"
-            data-comando="italic"
-            title="Cursiva"
-          >
-            <em>I</em>
-          </button>
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoContenido"
+      data-comando="italic"
+      title="Cursiva"
+    >
+      <em>I</em>
+    </button>
 
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoContenido"
-            data-comando="underline"
-            title="Subrayado"
-          >
-            <u>U</u>
-          </button>
-        </div>
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoContenido"
+      data-comando="underline"
+      title="Subrayado"
+    >
+      <u>U</u>
+    </button>
+  </div>
 
-        <div
-          id="textoContenido"
-          class="editor-texto"
-          contenteditable="true"
-          spellcheck="true"
-        >Por haber participado satisfactoriamente en esta actividad.</div>
+  <div
+    id="textoContenido"
+    class="editor-texto"
+    contenteditable="true"
+    spellcheck="true"
+  >
+    Por haber participado satisfactoriamente en esta actividad.
+  </div>
 
-        <div class="panel-controles">
+  <div class="panel-controles">
 
-          <div class="grupo-control">
-            <label for="alineacionContenido">
-              Alineación
-            </label>
+    <div class="grupo-control">
+      <label for="alineacionContenido">
+        Alineación
+      </label>
 
-            <select id="alineacionContenido">
-              <option value="left">
-                Izquierda
-              </option>
+      <select id="alineacionContenido">
+        <option value="left">
+          Izquierda
+        </option>
 
-              <option
-                value="center"
-                selected
-              >
-                Centro
-              </option>
+        <option
+          value="center"
+          selected
+        >
+          Centro
+        </option>
 
-              <option value="right">
-                Derecha
-              </option>
+        <option value="right">
+          Derecha
+        </option>
 
-              <option value="justify">
-                Justificado
-              </option>
-            </select>
-          </div>
+        <option value="justify">
+          Justificado
+        </option>
+      </select>
+    </div>
 
-          <div class="grupo-control">
-            <label for="tamanoContenido">
-              Tamaño
-            </label>
+    <div class="grupo-control">
+      <label for="tamanoContenido">
+        Tamaño
+      </label>
 
-            <div class="control-tamano">
-              <input
-                type="range"
-                id="tamanoContenido"
-                min="2"
-                max="40"
-                value="12"
-              >
+      <div class="control-tamano">
+        <input
+          type="range"
+          id="tamanoContenido"
+          min="2"
+          max="40"
+          value="12"
+        >
 
-              <input
-                type="number"
-                id="tamanoContenidoNumero"
-                min="2"
-                max="40"
-                value="12"
-              >
+        <input
+          type="number"
+          id="tamanoContenidoNumero"
+          min="2"
+          max="40"
+          value="12"
+        >
 
-              <span>px</span>
-            </div>
-          </div>
+        <span>px</span>
+      </div>
+    </div>
 
-          <div class="grupo-control">
-            <label for="colorContenido">
-              Color
-            </label>
+    <div class="grupo-control">
+      <label for="interlineadoContenido">
+        Interlineado
+      </label>
 
-            <input
-              type="color"
-              id="colorContenido"
-              value="#333333"
-            >
-          </div>
+      <div class="control-tamano">
+        <input
+          type="range"
+          id="interlineadoContenido"
+          min="0.8"
+          max="2"
+          step="0.05"
+          value="1.3"
+        >
 
-          <div class="grupo-control">
-            <label for="fuenteContenido">
-              Tipo de letra
-            </label>
+        <input
+          type="number"
+          id="interlineadoContenidoNumero"
+          min="0.8"
+          max="2"
+          step="0.05"
+          value="1.3"
+        >
+      </div>
+    </div>
 
-            <select id="fuenteContenido">
-              <option value="Arial">
-                Arial
-              </option>
+    <div class="grupo-control">
+      <label for="colorContenido">
+        Color
+      </label>
 
-              <option value="Georgia">
-                Georgia
-              </option>
+      <input
+        type="color"
+        id="colorContenido"
+        value="#333333"
+      >
+    </div>
 
-              <option value="Verdana">
-                Verdana
-              </option>
+    <div class="grupo-control">
+      <label for="fuenteContenido">
+        Tipo de letra
+      </label>
 
-              <option value="Times New Roman">
-                Times New Roman
-              </option>
+      <select id="fuenteContenido">
+        <option value="Arial">
+          Arial
+        </option>
 
-              <option value="Courier New">
-                Courier New
-              </option>
-            </select>
-          </div>
+        <option value="Georgia">
+          Georgia
+        </option>
 
-        </div>
-      </section>
+        <option value="Verdana">
+          Verdana
+        </option>
 
-      <!-- SEGUNDO PÁRRAFO -->
-      <section class="bloque-editor">
-        <h3>Segundo párrafo</h3>
+        <option value="Times New Roman">
+          Times New Roman
+        </option>
 
-        <label class="titulo-campo">
-          Texto del segundo párrafo:
-        </label>
+        <option value="Courier New">
+          Courier New
+        </option>
+      </select>
+    </div>
 
-        <div class="barra-editor">
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoContenidoDos"
-            data-comando="bold"
-            title="Negrita"
-          >
-            <strong>B</strong>
-          </button>
+  </div>
+</section>
 
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoContenidoDos"
-            data-comando="italic"
-            title="Cursiva"
-          >
-            <em>I</em>
-          </button>
+     <!-- SEGUNDO PÁRRAFO -->
+<section class="bloque-editor">
+  <h3>Segundo párrafo</h3>
 
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoContenidoDos"
-            data-comando="underline"
-            title="Subrayado"
-          >
-            <u>U</u>
-          </button>
-        </div>
+  <label class="titulo-campo">
+    Texto del segundo párrafo:
+  </label>
 
-        <div
-          id="textoContenidoDos"
-          class="editor-texto"
-          contenteditable="true"
-          spellcheck="true"
-        >Este certificado reconoce su dedicación y compromiso.</div>
+  <div class="barra-editor">
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoContenidoDos"
+      data-comando="bold"
+      title="Negrita"
+    >
+      <strong>B</strong>
+    </button>
 
-        <div class="panel-controles">
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoContenidoDos"
+      data-comando="italic"
+      title="Cursiva"
+    >
+      <em>I</em>
+    </button>
 
-          <div class="grupo-control">
-            <label for="alineacionContenidoDos">
-              Alineación
-            </label>
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoContenidoDos"
+      data-comando="underline"
+      title="Subrayado"
+    >
+      <u>U</u>
+    </button>
+  </div>
 
-            <select id="alineacionContenidoDos">
-              <option value="left">
-                Izquierda
-              </option>
+  <div
+    id="textoContenidoDos"
+    class="editor-texto"
+    contenteditable="true"
+    spellcheck="true"
+  >Este certificado reconoce su dedicación y compromiso.</div>
 
-              <option
-                value="center"
-                selected
-              >
-                Centro
-              </option>
+  <div class="panel-controles">
 
-              <option value="right">
-                Derecha
-              </option>
+    <div class="grupo-control">
+      <label for="alineacionContenidoDos">
+        Alineación
+      </label>
 
-              <option value="justify">
-                Justificado
-              </option>
-            </select>
-          </div>
+      <select id="alineacionContenidoDos">
+        <option value="left">Izquierda</option>
+        <option value="center" selected>Centro</option>
+        <option value="right">Derecha</option>
+        <option value="justify">Justificado</option>
+      </select>
+    </div>
 
-          <div class="grupo-control">
-            <label for="tamanoContenidoDos">
-              Tamaño
-            </label>
+    <div class="grupo-control">
+      <label for="tamanoContenidoDos">
+        Tamaño
+      </label>
 
-            <div class="control-tamano">
-              <input
-                type="range"
-                id="tamanoContenidoDos"
-                min="2"
-                max="40"
-                value="12"
-              >
+      <div class="control-tamano">
+        <input
+          type="range"
+          id="tamanoContenidoDos"
+          min="2"
+          max="40"
+          value="12"
+        >
 
-              <input
-                type="number"
-                id="tamanoContenidoDosNumero"
-                min="2"
-                max="40"
-                value="12"
-              >
+        <input
+          type="number"
+          id="tamanoContenidoDosNumero"
+          min="2"
+          max="40"
+          value="12"
+        >
 
-              <span>px</span>
-            </div>
-          </div>
+        <span>px</span>
+      </div>
+    </div>
 
-          <div class="grupo-control">
-            <label for="colorContenidoDos">
-              Color
-            </label>
+    <div class="grupo-control">
+      <label for="interlineadoContenidoDos">
+        Interlineado
+      </label>
 
-            <input
-              type="color"
-              id="colorContenidoDos"
-              value="#333333"
-            >
-          </div>
+      <div class="control-tamano">
+        <input
+          type="range"
+          id="interlineadoContenidoDos"
+          min="0.8"
+          max="2"
+          step="0.05"
+          value="1.3"
+        >
 
-          <div class="grupo-control">
-            <label for="fuenteContenidoDos">
-              Tipo de letra
-            </label>
+        <input
+          type="number"
+          id="interlineadoContenidoDosNumero"
+          min="0.8"
+          max="2"
+          step="0.05"
+          value="1.3"
+        >
+      </div>
+    </div>
 
-            <select id="fuenteContenidoDos">
-              <option value="Arial">
-                Arial
-              </option>
+    <div class="grupo-control">
+      <label for="colorContenidoDos">
+        Color
+      </label>
 
-              <option value="Georgia">
-                Georgia
-              </option>
+      <input
+        type="color"
+        id="colorContenidoDos"
+        value="#333333"
+      >
+    </div>
 
-              <option value="Verdana">
-                Verdana
-              </option>
+    <div class="grupo-control">
+      <label for="fuenteContenidoDos">
+        Tipo de letra
+      </label>
 
-              <option value="Times New Roman">
-                Times New Roman
-              </option>
+      <select id="fuenteContenidoDos">
+        <option value="Arial">Arial</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+    </div>
 
-              <option value="Courier New">
-                Courier New
-              </option>
-            </select>
-          </div>
-
-        </div>
-      </section>
+  </div>
+</section>
 
       <!-- FECHA -->
-      <section class="bloque-editor">
-        <h3>Fecha</h3>
+<section class="bloque-editor">
+  <h3>Fecha</h3>
 
-        <label class="titulo-campo">
-          Texto de la fecha:
-        </label>
+  <label class="titulo-campo">
+    Texto de la fecha:
+  </label>
 
-        <div class="barra-editor">
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoFecha"
-            data-comando="bold"
-            title="Negrita"
-          >
-            <strong>B</strong>
-          </button>
+  <div class="barra-editor">
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoFecha"
+      data-comando="bold"
+      title="Negrita"
+    >
+      <strong>B</strong>
+    </button>
 
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoFecha"
-            data-comando="italic"
-            title="Cursiva"
-          >
-            <em>I</em>
-          </button>
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoFecha"
+      data-comando="italic"
+      title="Cursiva"
+    >
+      <em>I</em>
+    </button>
 
-          <button
-            type="button"
-            class="boton-formato"
-            data-editor="textoFecha"
-            data-comando="underline"
-            title="Subrayado"
-          >
-            <u>U</u>
-          </button>
-        </div>
+    <button
+      type="button"
+      class="boton-formato"
+      data-editor="textoFecha"
+      data-comando="underline"
+      title="Subrayado"
+    >
+      <u>U</u>
+    </button>
+  </div>
 
-        <div
-          id="textoFecha"
-          class="editor-texto"
-          contenteditable="true"
-          spellcheck="true"
-        >13 de julio de 2026</div>
+  <div
+    id="textoFecha"
+    class="editor-texto"
+    contenteditable="true"
+    spellcheck="true"
+  >13 de julio de 2026</div>
 
-        <div class="panel-controles">
+  <div class="panel-controles">
 
-          <div class="grupo-control">
-            <label for="alineacionFecha">
-              Alineación
-            </label>
+    <div class="grupo-control">
+      <label for="alineacionFecha">
+        Alineación
+      </label>
 
-            <select id="alineacionFecha">
-              <option value="left">
-                Izquierda
-              </option>
+      <select id="alineacionFecha">
+        <option value="left">Izquierda</option>
+        <option value="center" selected>Centro</option>
+        <option value="right">Derecha</option>
+        <option value="justify">Justificado</option>
+      </select>
+    </div>
 
-              <option
-                value="center"
-                selected
-              >
-                Centro
-              </option>
+    <div class="grupo-control">
+      <label for="tamanoFecha">
+        Tamaño
+      </label>
 
-              <option value="right">
-                Derecha
-              </option>
+      <div class="control-tamano">
+        <input
+          type="range"
+          id="tamanoFecha"
+          min="2"
+          max="40"
+          value="10"
+        >
 
-              <option value="justify">
-                Justificado
-              </option>
-            </select>
-          </div>
+        <input
+          type="number"
+          id="tamanoFechaNumero"
+          min="2"
+          max="40"
+          value="10"
+        >
 
-          <div class="grupo-control">
-            <label for="tamanoFecha">
-              Tamaño
-            </label>
+        <span>px</span>
+      </div>
+    </div>
 
-            <div class="control-tamano">
-              <input
-                type="range"
-                id="tamanoFecha"
-                min="2"
-                max="40"
-                value="10"
-              >
+    <div class="grupo-control">
+      <label for="colorFecha">
+        Color
+      </label>
 
-              <input
-                type="number"
-                id="tamanoFechaNumero"
-                min="2"
-                max="40"
-                value="10"
-              >
+      <input
+        type="color"
+        id="colorFecha"
+        value="#333333"
+      >
+    </div>
 
-              <span>px</span>
-            </div>
-          </div>
+    <div class="grupo-control">
+      <label for="fuenteFecha">
+        Tipo de letra
+      </label>
 
-          <div class="grupo-control">
-            <label for="colorFecha">
-              Color
-            </label>
+      <select id="fuenteFecha">
+        <option value="Arial">Arial</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+    </div>
 
-            <input
-              type="color"
-              id="colorFecha"
-              value="#333333"
-            >
-          </div>
-
-          <div class="grupo-control">
-            <label for="fuenteFecha">
-              Tipo de letra
-            </label>
-
-            <select id="fuenteFecha">
-              <option value="Arial">
-                Arial
-              </option>
-
-              <option value="Georgia">
-                Georgia
-              </option>
-
-              <option value="Verdana">
-                Verdana
-              </option>
-
-              <option value="Times New Roman">
-                Times New Roman
-              </option>
-
-              <option value="Courier New">
-                Courier New
-              </option>
-            </select>
-          </div>
-
-        </div>
-      </section>
+  </div>
+</section>
+      </main>
+  <aside class="panel-vista-previa">
 
       <!-- PLANTILLA -->
       <section class="bloque-editor">
@@ -647,8 +759,8 @@
 
           <img
             id="plantilla"
-            alt="Plantilla del certificado"
-          >
+            alt=""
+            >
 
           <h2 id="resultado">
             Aquí aparecerá el nombre
@@ -706,7 +818,30 @@
         <p id="estadoDescarga"></p>
       </section>
 
-    </div>
+    <!-- PLANTILLAS -->
+<!-- GUARDAR PLANTILLA -->
+      <section class="bloque-editor guardar-plantilla">
+        <h3>Guardar plantilla</h3>
+
+        <p class="descripcion-seccion">
+          Guarda la configuración actual del certificado para reutilizarla en futuros proyectos.
+        </p>
+
+        <div class="fila-configuracion">
+          <button
+            type="button"
+            id="guardarConfiguracion"
+          >
+            💾 Guardar plantilla
+          </button>
+        </div>
+      </section>
+
+    </aside>
+
+  </div>
+
+</div>
 
     <!-- Librería para leer Excel -->
     <script

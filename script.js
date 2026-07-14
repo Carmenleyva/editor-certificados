@@ -55,6 +55,25 @@ const fuenteTexto =
 
 
 /* ======================================================
+   CONFIGURACIÓN
+====================================================== */
+
+const guardarConfiguracion =
+  document.getElementById(
+    "guardarConfiguracion"
+  );
+
+const cargarConfiguracion =
+  document.getElementById(
+    "cargarConfiguracion"
+  );
+
+const estadoConfiguracion =
+  document.getElementById(
+    "estadoConfiguracion"
+  );
+
+/* ======================================================
    ELEMENTOS DE LA PLANTILLA
 ====================================================== */
 
@@ -87,6 +106,14 @@ const tamanoContenido =
 const tamanoContenidoNumero =
   document.getElementById("tamanoContenidoNumero");
 
+const interlineadoContenido =
+  document.getElementById("interlineadoContenido");
+
+const interlineadoContenidoNumero =
+  document.getElementById(
+    "interlineadoContenidoNumero"
+  );
+
 const colorContenido =
   document.getElementById("colorContenido");
 
@@ -112,6 +139,16 @@ const tamanoContenidoDos =
 
 const tamanoContenidoDosNumero =
   document.getElementById("tamanoContenidoDosNumero");
+
+const interlineadoContenidoDos =
+  document.getElementById(
+    "interlineadoContenidoDos"
+  );
+
+const interlineadoContenidoDosNumero =
+  document.getElementById(
+    "interlineadoContenidoDosNumero"
+  );
 
 const colorContenidoDos =
   document.getElementById("colorContenidoDos");
@@ -162,6 +199,20 @@ const estadoDescarga =
 const botonesFormato =
   document.querySelectorAll(".boton-formato");
 
+const inputFuentePersonalizada =
+  document.getElementById(
+    "subirFuente"
+  );
+
+const contenedorFuentesPersonalizadas =
+  document.getElementById(
+    "listaFuentes"
+  );
+
+const mensajeFuentesPersonalizadas =
+  document.getElementById(
+    "estadoFuente"
+  );
 
 /* ======================================================
    FUNCIONES AUXILIARES
@@ -1648,4 +1699,857 @@ actualizarTamanoContenidoDos(
 
 actualizarTamanoFecha(
   tamanoFecha.value
+);
+
+/* ======================================================
+   GESTOR DE FUENTES PERSONALIZADAS
+====================================================== */
+
+const fuentesPersonalizadas =
+  new Map();
+
+
+function agregarFuenteASelector(
+  selector,
+  nombreFuente
+) {
+  const yaExiste =
+    Array.from(
+      selector.options
+    ).some(function (opcion) {
+      return opcion.value === nombreFuente;
+    });
+
+  if (yaExiste) {
+    return;
+  }
+
+  const opcion =
+    document.createElement("option");
+
+  opcion.value =
+    nombreFuente;
+
+  opcion.textContent =
+    nombreFuente;
+
+  selector.appendChild(
+    opcion
+  );
+}
+
+
+function agregarFuenteATodosLosSelectores(
+  nombreFuente
+) {
+  agregarFuenteASelector(
+    fuenteTexto,
+    nombreFuente
+  );
+
+  agregarFuenteASelector(
+    fuenteContenido,
+    nombreFuente
+  );
+
+  agregarFuenteASelector(
+    fuenteContenidoDos,
+    nombreFuente
+  );
+
+  agregarFuenteASelector(
+    fuenteFecha,
+    nombreFuente
+  );
+}
+
+
+function quitarFuenteDeSelector(
+  selector,
+  nombreFuente
+) {
+  const opcion =
+    Array.from(
+      selector.options
+    ).find(function (elemento) {
+      return elemento.value === nombreFuente;
+    });
+
+  if (opcion) {
+    opcion.remove();
+  }
+}
+
+
+function eliminarFuentePersonalizada(
+  nombreFuente
+) {
+  const datosFuente =
+    fuentesPersonalizadas.get(
+      nombreFuente
+    );
+
+  if (!datosFuente) {
+    return;
+  }
+
+  document.fonts.delete(
+    datosFuente.fontFace
+  );
+
+  URL.revokeObjectURL(
+    datosFuente.url
+  );
+
+  fuentesPersonalizadas.delete(
+    nombreFuente
+  );
+
+  quitarFuenteDeSelector(
+    fuenteTexto,
+    nombreFuente
+  );
+
+  quitarFuenteDeSelector(
+    fuenteContenido,
+    nombreFuente
+  );
+
+  quitarFuenteDeSelector(
+    fuenteContenidoDos,
+    nombreFuente
+  );
+
+  quitarFuenteDeSelector(
+    fuenteFecha,
+    nombreFuente
+  );
+
+  if (
+    fuenteTexto.value === nombreFuente
+  ) {
+    fuenteTexto.value = "Arial";
+    resultado.style.fontFamily = "Arial";
+  }
+
+  if (
+    fuenteContenido.value === nombreFuente
+  ) {
+    fuenteContenido.value = "Arial";
+    textoContenido.style.fontFamily = "Arial";
+    contenidoCertificado.style.fontFamily = "Arial";
+  }
+
+  if (
+    fuenteContenidoDos.value === nombreFuente
+  ) {
+    fuenteContenidoDos.value = "Arial";
+    textoContenidoDos.style.fontFamily = "Arial";
+    contenidoCertificadoDos.style.fontFamily = "Arial";
+  }
+
+  if (
+    fuenteFecha.value === nombreFuente
+  ) {
+    fuenteFecha.value = "Arial";
+    textoFecha.style.fontFamily = "Arial";
+    fechaCertificado.style.fontFamily = "Arial";
+  }
+
+  datosFuente.etiqueta.remove();
+
+  if (
+    fuentesPersonalizadas.size === 0
+  ) {
+    mensajeFuentesPersonalizadas.hidden =
+      false;
+
+    mensajeFuentesPersonalizadas.textContent =
+      "No has añadido ninguna fuente personalizada.";
+  }
+}
+
+
+function crearEtiquetaFuente(
+  nombreFuente
+) {
+  const etiqueta =
+    document.createElement("span");
+
+  etiqueta.className =
+    "etiqueta-fuente";
+
+  etiqueta.style.fontFamily =
+    nombreFuente;
+
+  const texto =
+    document.createElement("span");
+
+  texto.textContent =
+    nombreFuente;
+
+  const botonEliminar =
+    document.createElement("button");
+
+  botonEliminar.type =
+    "button";
+
+  botonEliminar.textContent =
+    "×";
+
+  botonEliminar.title =
+    "Eliminar fuente";
+
+  botonEliminar.style.marginLeft =
+    "8px";
+
+  botonEliminar.style.padding =
+    "0";
+
+  botonEliminar.style.border =
+    "0";
+
+  botonEliminar.style.background =
+    "transparent";
+
+  botonEliminar.style.fontSize =
+    "20px";
+
+  botonEliminar.addEventListener(
+    "click",
+    function () {
+      eliminarFuentePersonalizada(
+        nombreFuente
+      );
+    }
+  );
+
+  etiqueta.appendChild(
+    texto
+  );
+
+  etiqueta.appendChild(
+    botonEliminar
+  );
+
+  contenedorFuentesPersonalizadas.appendChild(
+    etiqueta
+  );
+
+  return etiqueta;
+}
+
+
+inputFuentePersonalizada.addEventListener(
+  "change",
+  async function () {
+    const archivos =
+      Array.from(
+        inputFuentePersonalizada.files
+      );
+
+    for (const archivo of archivos) {
+      const nombreFuente =
+        archivo.name
+          .replace(/\.[^.]+$/, "")
+          .trim();
+
+      if (
+        nombreFuente === "" ||
+        fuentesPersonalizadas.has(
+          nombreFuente
+        )
+      ) {
+        continue;
+      }
+
+      let urlFuente = "";
+
+      try {
+        urlFuente =
+          URL.createObjectURL(
+            archivo
+          );
+
+        const fontFace =
+          new FontFace(
+            nombreFuente,
+            'url("' + urlFuente + '")'
+          );
+
+        await fontFace.load();
+
+        document.fonts.add(
+          fontFace
+        );
+
+        agregarFuenteATodosLosSelectores(
+          nombreFuente
+        );
+
+        mensajeFuentesPersonalizadas.hidden =
+          true;
+
+        const etiqueta =
+          crearEtiquetaFuente(
+            nombreFuente
+          );
+
+        fuentesPersonalizadas.set(
+          nombreFuente,
+          {
+            fontFace: fontFace,
+            url: urlFuente,
+            etiqueta: etiqueta
+          }
+        );
+      } catch (error) {
+        console.error(
+          "No se pudo cargar la fuente:",
+          archivo.name,
+          error
+        );
+
+        if (urlFuente !== "") {
+          URL.revokeObjectURL(
+            urlFuente
+          );
+        }
+
+        alert(
+          "No se pudo cargar la fuente " +
+          archivo.name +
+          "."
+        );
+      }
+    }
+
+    inputFuentePersonalizada.value =
+      "";
+  }
+);
+/* ======================================================
+   INTERLINEADO DE LOS PÁRRAFOS
+====================================================== */
+
+function actualizarInterlineadoContenido(valor) {
+  const numero =
+    Number(valor);
+
+  if (!Number.isFinite(numero)) {
+    return;
+  }
+
+  const interlineado =
+    Math.min(
+      2,
+      Math.max(0.8, numero)
+    );
+
+  textoContenido.style.lineHeight =
+    interlineado;
+
+  contenidoCertificado.style.lineHeight =
+    interlineado;
+
+  interlineadoContenido.value =
+    interlineado;
+
+  interlineadoContenidoNumero.value =
+    interlineado;
+}
+
+
+interlineadoContenido.addEventListener(
+  "input",
+  function () {
+    actualizarInterlineadoContenido(
+      interlineadoContenido.value
+    );
+  }
+);
+
+
+interlineadoContenidoNumero.addEventListener(
+  "input",
+  function () {
+    actualizarInterlineadoContenido(
+      interlineadoContenidoNumero.value
+    );
+  }
+);
+
+
+function actualizarInterlineadoContenidoDos(valor) {
+  const numero =
+    Number(valor);
+
+  if (!Number.isFinite(numero)) {
+    return;
+  }
+
+  const interlineado =
+    Math.min(
+      2,
+      Math.max(0.8, numero)
+    );
+
+  textoContenidoDos.style.lineHeight =
+    interlineado;
+
+  contenidoCertificadoDos.style.lineHeight =
+    interlineado;
+
+  interlineadoContenidoDos.value =
+    interlineado;
+
+  interlineadoContenidoDosNumero.value =
+    interlineado;
+}
+
+
+interlineadoContenidoDos.addEventListener(
+  "input",
+  function () {
+    actualizarInterlineadoContenidoDos(
+      interlineadoContenidoDos.value
+    );
+  }
+);
+
+
+interlineadoContenidoDosNumero.addEventListener(
+  "input",
+  function () {
+    actualizarInterlineadoContenidoDos(
+      interlineadoContenidoDosNumero.value
+    );
+  }
+);
+
+
+actualizarInterlineadoContenido(
+  interlineadoContenido.value
+);
+
+actualizarInterlineadoContenidoDos(
+  interlineadoContenidoDos.value
+);
+/* ======================================================
+   GUARDAR CONFIGURACIÓN EN JSON
+====================================================== */
+
+function obtenerPosicionElemento(elemento) {
+  return {
+    left: elemento.style.left || "",
+    top: elemento.style.top || ""
+  };
+}
+
+
+function obtenerConfiguracionActual() {
+  return {
+    version: 1,
+
+    nombre: {
+      posicion: obtenerPosicionElemento(
+        resultado
+      ),
+      tamano: tamanoTexto.value,
+      color: colorTexto.value,
+      fuente: fuenteTexto.value
+    },
+
+    primerParrafo: {
+      posicion: obtenerPosicionElemento(
+        contenidoCertificado
+      ),
+      alineacion:
+        alineacionContenido.value,
+      tamano: tamanoContenido.value,
+      interlineado:
+        interlineadoContenido.value,
+      color: colorContenido.value,
+      fuente: fuenteContenido.value
+    },
+
+    segundoParrafo: {
+      posicion: obtenerPosicionElemento(
+        contenidoCertificadoDos
+      ),
+      alineacion:
+        alineacionContenidoDos.value,
+      tamano:
+        tamanoContenidoDos.value,
+      interlineado:
+        interlineadoContenidoDos.value,
+      color:
+        colorContenidoDos.value,
+      fuente:
+        fuenteContenidoDos.value
+    },
+
+    fecha: {
+      posicion: obtenerPosicionElemento(
+        fechaCertificado
+      ),
+      alineacion: alineacionFecha.value,
+      tamano: tamanoFecha.value,
+      color: colorFecha.value,
+      fuente: fuenteFecha.value
+    }
+  };
+}
+
+
+guardarConfiguracion.addEventListener(
+  "click",
+  function () {
+    try {
+      const configuracion =
+        obtenerConfiguracionActual();
+
+      const contenidoJson =
+        JSON.stringify(
+          configuracion,
+          null,
+          2
+        );
+
+      const archivo =
+        new Blob(
+          [contenidoJson],
+          {
+            type: "application/json"
+          }
+        );
+
+      const url =
+        URL.createObjectURL(
+          archivo
+        );
+
+      const enlace =
+        document.createElement("a");
+
+      enlace.href =
+        url;
+
+      enlace.download =
+        "configuracion-certificado.json";
+
+      document.body.appendChild(
+        enlace
+      );
+
+      enlace.click();
+      enlace.remove();
+
+      URL.revokeObjectURL(
+        url
+      );
+
+      estadoConfiguracion.textContent =
+        "Configuración guardada correctamente.";
+    } catch (error) {
+      console.error(error);
+
+      estadoConfiguracion.textContent =
+        "No se pudo guardar la configuración.";
+
+      alert(
+        "No se pudo guardar la configuración."
+      );
+    }
+  }
+);
+/* ======================================================
+   CARGAR CONFIGURACIÓN DESDE JSON
+====================================================== */
+
+function aplicarPosicionElemento(
+  elemento,
+  posicion
+) {
+  if (!posicion) {
+    return;
+  }
+
+  if (posicion.left) {
+    elemento.style.left =
+      posicion.left;
+  }
+
+  if (posicion.top) {
+    elemento.style.top =
+      posicion.top;
+  }
+}
+
+
+function aplicarConfiguracion(
+  configuracion
+) {
+  if (
+    !configuracion ||
+    configuracion.version !== 1
+  ) {
+    throw new Error(
+      "Formato de configuración no válido."
+    );
+  }
+
+  if (configuracion.nombre) {
+    aplicarPosicionElemento(
+      resultado,
+      configuracion.nombre.posicion
+    );
+
+    if (configuracion.nombre.tamano) {
+      actualizarTamanoNombre(
+        configuracion.nombre.tamano
+      );
+    }
+
+    if (configuracion.nombre.color) {
+      colorTexto.value =
+        configuracion.nombre.color;
+
+      resultado.style.color =
+        configuracion.nombre.color;
+    }
+
+    if (configuracion.nombre.fuente) {
+      fuenteTexto.value =
+        configuracion.nombre.fuente;
+
+      resultado.style.fontFamily =
+        configuracion.nombre.fuente;
+    }
+  }
+
+  if (configuracion.primerParrafo) {
+    aplicarPosicionElemento(
+      contenidoCertificado,
+      configuracion.primerParrafo.posicion
+    );
+
+    if (
+      configuracion.primerParrafo.alineacion
+    ) {
+      alineacionContenido.value =
+        configuracion.primerParrafo.alineacion;
+
+      textoContenido.style.textAlign =
+        configuracion.primerParrafo.alineacion;
+
+      contenidoCertificado.style.textAlign =
+        configuracion.primerParrafo.alineacion;
+    }
+
+    if (
+      configuracion.primerParrafo.tamano
+    ) {
+      actualizarTamanoContenido(
+        configuracion.primerParrafo.tamano
+      );
+    }
+
+    if (
+      configuracion.primerParrafo.interlineado
+    ) {
+      actualizarInterlineadoContenido(
+        configuracion.primerParrafo.interlineado
+      );
+    }
+
+    if (
+      configuracion.primerParrafo.color
+    ) {
+      colorContenido.value =
+        configuracion.primerParrafo.color;
+
+      textoContenido.style.color =
+        configuracion.primerParrafo.color;
+
+      contenidoCertificado.style.color =
+        configuracion.primerParrafo.color;
+    }
+
+    if (
+      configuracion.primerParrafo.fuente
+    ) {
+      fuenteContenido.value =
+        configuracion.primerParrafo.fuente;
+
+      textoContenido.style.fontFamily =
+        configuracion.primerParrafo.fuente;
+
+      contenidoCertificado.style.fontFamily =
+        configuracion.primerParrafo.fuente;
+    }
+  }
+
+  if (configuracion.segundoParrafo) {
+    aplicarPosicionElemento(
+      contenidoCertificadoDos,
+      configuracion.segundoParrafo.posicion
+    );
+
+    if (
+      configuracion.segundoParrafo.alineacion
+    ) {
+      alineacionContenidoDos.value =
+        configuracion.segundoParrafo.alineacion;
+
+      textoContenidoDos.style.textAlign =
+        configuracion.segundoParrafo.alineacion;
+
+      contenidoCertificadoDos.style.textAlign =
+        configuracion.segundoParrafo.alineacion;
+    }
+
+    if (
+      configuracion.segundoParrafo.tamano
+    ) {
+      actualizarTamanoContenidoDos(
+        configuracion.segundoParrafo.tamano
+      );
+    }
+
+    if (
+      configuracion.segundoParrafo.interlineado
+    ) {
+      actualizarInterlineadoContenidoDos(
+        configuracion.segundoParrafo.interlineado
+      );
+    }
+
+    if (
+      configuracion.segundoParrafo.color
+    ) {
+      colorContenidoDos.value =
+        configuracion.segundoParrafo.color;
+
+      textoContenidoDos.style.color =
+        configuracion.segundoParrafo.color;
+
+      contenidoCertificadoDos.style.color =
+        configuracion.segundoParrafo.color;
+    }
+
+    if (
+      configuracion.segundoParrafo.fuente
+    ) {
+      fuenteContenidoDos.value =
+        configuracion.segundoParrafo.fuente;
+
+      textoContenidoDos.style.fontFamily =
+        configuracion.segundoParrafo.fuente;
+
+      contenidoCertificadoDos.style.fontFamily =
+        configuracion.segundoParrafo.fuente;
+    }
+  }
+
+  if (configuracion.fecha) {
+    aplicarPosicionElemento(
+      fechaCertificado,
+      configuracion.fecha.posicion
+    );
+
+    if (configuracion.fecha.alineacion) {
+      alineacionFecha.value =
+        configuracion.fecha.alineacion;
+
+      textoFecha.style.textAlign =
+        configuracion.fecha.alineacion;
+
+      fechaCertificado.style.textAlign =
+        configuracion.fecha.alineacion;
+    }
+
+    if (configuracion.fecha.tamano) {
+      actualizarTamanoFecha(
+        configuracion.fecha.tamano
+      );
+    }
+
+    if (configuracion.fecha.color) {
+      colorFecha.value =
+        configuracion.fecha.color;
+
+      textoFecha.style.color =
+        configuracion.fecha.color;
+
+      fechaCertificado.style.color =
+        configuracion.fecha.color;
+    }
+
+    if (configuracion.fecha.fuente) {
+      fuenteFecha.value =
+        configuracion.fecha.fuente;
+
+      textoFecha.style.fontFamily =
+        configuracion.fecha.fuente;
+
+      fechaCertificado.style.fontFamily =
+        configuracion.fecha.fuente;
+    }
+  }
+}
+
+
+cargarConfiguracion.addEventListener(
+  "change",
+  function () {
+    const archivo =
+      cargarConfiguracion.files[0];
+
+    if (!archivo) {
+      return;
+    }
+
+    const lector =
+      new FileReader();
+
+    lector.onload =
+      function (evento) {
+        try {
+          const configuracion =
+            JSON.parse(
+              evento.target.result
+            );
+
+          aplicarConfiguracion(
+            configuracion
+          );
+
+          estadoConfiguracion.textContent =
+            "Configuración cargada correctamente.";
+        } catch (error) {
+          console.error(error);
+
+          estadoConfiguracion.textContent =
+            "No se pudo cargar la configuración.";
+
+          alert(
+            "El archivo JSON no es válido o no corresponde a esta herramienta."
+          );
+        } finally {
+          cargarConfiguracion.value =
+            "";
+        }
+      };
+
+    lector.onerror =
+      function () {
+        estadoConfiguracion.textContent =
+          "No se pudo abrir el archivo JSON.";
+      };
+
+    lector.readAsText(
+      archivo
+    );
+  }
 );
