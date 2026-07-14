@@ -1003,9 +1003,9 @@ input[type="file"] {
 }
 .logo-app {
   display: block;
-  width: 120px !important;
-  max-width: 90px !important;
-  height: 90px !important;
+  width: 200px !important;
+  max-width: 120px !important;
+  height: 120px !important;
   object-fit: contain;
   margin: 14px auto 8px;
 }
