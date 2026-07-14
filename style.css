@@ -1,0 +1,408 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #222222;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: #222222;
+  font-size: 36px;
+}
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+button {
+  padding: 10px 16px;
+  font-size: 16px;
+  border: 1px solid #999999;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #eeeeee;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #aaaaaa;
+  border-radius: 6px;
+  background-color: white;
+}
+
+input[type="text"] {
+  width: 100%;
+}
+
+input[type="color"] {
+  width: 60px;
+  height: 42px;
+  padding: 3px;
+  border: 1px solid #aaaaaa;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+}
+
+input[type="file"] {
+  font-size: 16px;
+}
+
+.bloque-editor {
+  margin-bottom: 25px;
+  padding: 24px;
+  border: 1px solid #d2d2d2;
+  border-radius: 14px;
+  background-color: white;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.titulo-campo {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.fila-principal {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.fila-principal input {
+  flex: 1;
+}
+
+.barra-editor {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.boton-formato {
+  width: 44px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.editor-texto {
+  min-height: 100px;
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 1px solid #999999;
+  border-radius: 8px;
+  background-color: white;
+  line-height: 1.5;
+  outline: none;
+  color: #333333;
+  caret-color: #333333;
+}
+
+.editor-texto,
+.editor-texto * {
+  color: inherit;
+}
+
+.editor-texto:focus {
+  border-color: #006da5;
+  box-shadow: 0 0 0 2px rgba(0, 109, 165, 0.12);
+}
+
+.editor-texto::selection,
+.editor-texto *::selection {
+  color: white;
+  background-color: #006da5;
+}
+
+.panel-controles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 18px 24px;
+  align-items: end;
+  margin-top: 16px;
+}
+
+.grupo-control {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.grupo-control > label {
+  font-weight: bold;
+}
+
+.control-tamano {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.control-tamano input[type="range"] {
+  flex: 1;
+  min-width: 120px;
+}
+
+.control-tamano input[type="number"] {
+  width: 80px;
+}
+
+#estadoExcel,
+#estadoDescarga {
+  margin-top: 15px;
+  line-height: 1.4;
+}
+
+#codigoActual {
+  min-height: 42px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid #d2d2d2;
+  border-radius: 6px;
+  background-color: #f7f7f7;
+}
+
+/* Vista previa del certificado */
+
+.certificado {
+  position: relative;
+  margin-top: 25px;
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: white;
+}
+
+#plantilla[hidden] {
+  display: none;
+}
+
+#plantilla {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Nombre */
+
+#resultado {
+  position: absolute;
+  top: 34%;
+  left: 62%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 48%;
+  margin: 0;
+  padding: 2px 6px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.15;
+  color: #006da5;
+  background-color: transparent;
+  border-radius: 4px;
+  cursor: grab;
+  user-select: none;
+  z-index: 5;
+}
+
+/* Primer párrafo */
+
+#contenidoCertificado {
+  position: absolute;
+  top: 52%;
+  left: 62%;
+  transform: translate(-50%, -50%);
+  width: 48%;
+  margin: 0;
+  padding: 4px 8px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #333333;
+  background-color: transparent;
+  cursor: grab;
+  user-select: none;
+  z-index: 5;
+}
+
+#contenidoCertificado,
+#contenidoCertificado * {
+  color: inherit;
+}
+
+/* Segundo párrafo */
+
+#contenidoCertificadoDos {
+  position: absolute;
+  top: 68%;
+  left: 62%;
+  transform: translate(-50%, -50%);
+  width: 48%;
+  margin: 0;
+  padding: 4px 8px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #333333;
+  background-color: transparent;
+  cursor: grab;
+  user-select: none;
+  z-index: 5;
+}
+
+#contenidoCertificadoDos,
+#contenidoCertificadoDos * {
+  color: inherit;
+}
+
+/* Fecha */
+
+#fechaCertificado {
+  position: absolute;
+  top: 82%;
+  left: 62%;
+  transform: translate(-50%, -50%);
+  width: 48%;
+  margin: 0;
+  padding: 2px 6px;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #333333;
+  background-color: transparent;
+  cursor: grab;
+  user-select: none;
+  z-index: 6;
+}
+
+#fechaCertificado,
+#fechaCertificado * {
+  color: inherit;
+}
+
+/* Permitir mover los textos */
+
+#resultado,
+#contenidoCertificado,
+#contenidoCertificadoDos,
+#fechaCertificado {
+  pointer-events: auto;
+  touch-action: none;
+  cursor: grab;
+}
+
+/* Navegación entre certificados */
+
+.fila-navegacion {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 35px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+#certificadoAnterior,
+#certificadoSiguiente {
+  margin: 0;
+  padding: 12px 22px;
+  font-size: 16px;
+}
+
+/* Botones de descarga */
+
+.fila-descargas {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+#descargar,
+#descargarTodos {
+  margin: 0;
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+#estadoDescarga {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Responsive */
+
+@media (max-width: 750px) {
+  body {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .bloque-editor {
+    padding: 18px;
+  }
+
+  .panel-controles {
+    grid-template-columns: 1fr;
+  }
+
+  .fila-principal {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fila-navegacion,
+  .fila-descargas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #certificadoAnterior,
+  #certificadoSiguiente,
+  #descargar,
+  #descargarTodos {
+    width: 100%;
+  }
+} 

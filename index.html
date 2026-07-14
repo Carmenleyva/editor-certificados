@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Generador de certificados</title>
+
+    <link rel="stylesheet" href="./style.css">
+  </head>
+
+  <body>
+    <div class="contenedor">
+
+      <h1>Generador de certificados</h1>
+
+      <!-- BASE DE DATOS -->
+      <section class="bloque-editor">
+        <h3>Base de datos</h3>
+
+        <label
+          class="titulo-campo"
+          for="subirExcel"
+        >
+          Selecciona el archivo Excel:
+        </label>
+
+        <input
+          type="file"
+          id="subirExcel"
+          accept=".xlsx,.xls,.csv"
+        >
+
+        <p id="estadoExcel">
+          Todavía no se ha cargado ningún archivo.
+        </p>
+
+        <div class="panel-controles">
+
+          <div class="grupo-control">
+            <label for="selectorParticipante">
+              Participante
+            </label>
+
+            <select
+              id="selectorParticipante"
+              disabled
+            >
+              <option value="">
+                Primero carga un archivo Excel
+              </option>
+            </select>
+          </div>
+
+          <div class="grupo-control">
+            <label>
+              Código de orden
+            </label>
+
+            <div id="codigoActual">
+              —
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- FUENTES -->
+<section class="bloque-editor">
+  <h3>Fuentes personalizadas</h3>
+
+  <label
+    class="titulo-campo"
+    for="subirFuente"
+  >
+    Añadir una fuente:
+  </label>
+
+  <input
+    type="file"
+    id="subirFuente"
+    accept=".ttf,.otf,.woff,.woff2"
+    multiple
+  >
+
+  <p id="estadoFuente">
+    No hay fuentes personalizadas cargadas.
+  </p>
+
+  <div id="listaFuentes"></div>
+</section>
+
+      <!-- NOMBRE -->
+      <section class="bloque-editor">
+        <h3>Nombre del participante</h3>
+
+        <label
+          class="titulo-campo"
+          for="nombre"
+        >
+          Escribe el nombre:
+        </label>
+
+        <div class="fila-principal">
+          <input
+            type="text"
+            id="nombre"
+            placeholder="Escribe un nombre"
+          >
+
+          <button
+            type="button"
+            id="boton"
+          >
+            Mostrar nombre
+          </button>
+        </div>
+
+        <div class="panel-controles">
+
+          <div class="grupo-control">
+            <label for="tamanoTexto">
+              Tamaño
+            </label>
+
+            <div class="control-tamano">
+              <input
+                type="range"
+                id="tamanoTexto"
+                min="2"
+                max="60"
+                value="18"
+              >
+
+              <input
+                type="number"
+                id="tamanoTextoNumero"
+                min="2"
+                max="60"
+                value="18"
+              >
+
+              <span>px</span>
+            </div>
+          </div>
+
+          <div class="grupo-control">
+            <label for="colorTexto">
+              Color
+            </label>
+
+            <input
+              type="color"
+              id="colorTexto"
+              value="#006da5"
+            >
+          </div>
+
+          <div class="grupo-control">
+            <label for="fuenteTexto">
+              Tipo de letra
+            </label>
+
+            <select id="fuenteTexto">
+              <option value="Arial">
+                Arial
+              </option>
+
+              <option value="Georgia">
+                Georgia
+              </option>
+
+              <option value="Verdana">
+                Verdana
+              </option>
+
+              <option value="Times New Roman">
+                Times New Roman
+              </option>
+
+              <option value="Courier New">
+                Courier New
+              </option>
+            </select>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PRIMER PÁRRAFO -->
+      <section class="bloque-editor">
+        <h3>Primer párrafo</h3>
+
+        <label class="titulo-campo">
+          Texto del primer párrafo:
+        </label>
+
+        <div class="barra-editor">
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoContenido"
+            data-comando="bold"
+            title="Negrita"
+          >
+            <strong>B</strong>
+          </button>
+
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoContenido"
+            data-comando="italic"
+            title="Cursiva"
+          >
+            <em>I</em>
+          </button>
+
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoContenido"
+            data-comando="underline"
+            title="Subrayado"
+          >
+            <u>U</u>
+          </button>
+        </div>
+
+        <div
+          id="textoContenido"
+          class="editor-texto"
+          contenteditable="true"
+          spellcheck="true"
+        >Por haber participado satisfactoriamente en esta actividad.</div>
+
+        <div class="panel-controles">
+
+          <div class="grupo-control">
+            <label for="alineacionContenido">
+              Alineación
+            </label>
+
+            <select id="alineacionContenido">
+              <option value="left">
+                Izquierda
+              </option>
+
+              <option
+                value="center"
+                selected
+              >
+                Centro
+              </option>
+
+              <option value="right">
+                Derecha
+              </option>
+
+              <option value="justify">
+                Justificado
+              </option>
+            </select>
+          </div>
+
+          <div class="grupo-control">
+            <label for="tamanoContenido">
+              Tamaño
+            </label>
+
+            <div class="control-tamano">
+              <input
+                type="range"
+                id="tamanoContenido"
+                min="2"
+                max="40"
+                value="12"
+              >
+
+              <input
+                type="number"
+                id="tamanoContenidoNumero"
+                min="2"
+                max="40"
+                value="12"
+              >
+
+              <span>px</span>
+            </div>
+          </div>
+
+          <div class="grupo-control">
+            <label for="colorContenido">
+              Color
+            </label>
+
+            <input
+              type="color"
+              id="colorContenido"
+              value="#333333"
+            >
+          </div>
+
+          <div class="grupo-control">
+            <label for="fuenteContenido">
+              Tipo de letra
+            </label>
+
+            <select id="fuenteContenido">
+              <option value="Arial">
+                Arial
+              </option>
+
+              <option value="Georgia">
+                Georgia
+              </option>
+
+              <option value="Verdana">
+                Verdana
+              </option>
+
+              <option value="Times New Roman">
+                Times New Roman
+              </option>
+
+              <option value="Courier New">
+                Courier New
+              </option>
+            </select>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEGUNDO PÁRRAFO -->
+      <section class="bloque-editor">
+        <h3>Segundo párrafo</h3>
+
+        <label class="titulo-campo">
+          Texto del segundo párrafo:
+        </label>
+
+        <div class="barra-editor">
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoContenidoDos"
+            data-comando="bold"
+            title="Negrita"
+          >
+            <strong>B</strong>
+          </button>
+
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoContenidoDos"
+            data-comando="italic"
+            title="Cursiva"
+          >
+            <em>I</em>
+          </button>
+
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoContenidoDos"
+            data-comando="underline"
+            title="Subrayado"
+          >
+            <u>U</u>
+          </button>
+        </div>
+
+        <div
+          id="textoContenidoDos"
+          class="editor-texto"
+          contenteditable="true"
+          spellcheck="true"
+        >Este certificado reconoce su dedicación y compromiso.</div>
+
+        <div class="panel-controles">
+
+          <div class="grupo-control">
+            <label for="alineacionContenidoDos">
+              Alineación
+            </label>
+
+            <select id="alineacionContenidoDos">
+              <option value="left">
+                Izquierda
+              </option>
+
+              <option
+                value="center"
+                selected
+              >
+                Centro
+              </option>
+
+              <option value="right">
+                Derecha
+              </option>
+
+              <option value="justify">
+                Justificado
+              </option>
+            </select>
+          </div>
+
+          <div class="grupo-control">
+            <label for="tamanoContenidoDos">
+              Tamaño
+            </label>
+
+            <div class="control-tamano">
+              <input
+                type="range"
+                id="tamanoContenidoDos"
+                min="2"
+                max="40"
+                value="12"
+              >
+
+              <input
+                type="number"
+                id="tamanoContenidoDosNumero"
+                min="2"
+                max="40"
+                value="12"
+              >
+
+              <span>px</span>
+            </div>
+          </div>
+
+          <div class="grupo-control">
+            <label for="colorContenidoDos">
+              Color
+            </label>
+
+            <input
+              type="color"
+              id="colorContenidoDos"
+              value="#333333"
+            >
+          </div>
+
+          <div class="grupo-control">
+            <label for="fuenteContenidoDos">
+              Tipo de letra
+            </label>
+
+            <select id="fuenteContenidoDos">
+              <option value="Arial">
+                Arial
+              </option>
+
+              <option value="Georgia">
+                Georgia
+              </option>
+
+              <option value="Verdana">
+                Verdana
+              </option>
+
+              <option value="Times New Roman">
+                Times New Roman
+              </option>
+
+              <option value="Courier New">
+                Courier New
+              </option>
+            </select>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- FECHA -->
+      <section class="bloque-editor">
+        <h3>Fecha</h3>
+
+        <label class="titulo-campo">
+          Texto de la fecha:
+        </label>
+
+        <div class="barra-editor">
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoFecha"
+            data-comando="bold"
+            title="Negrita"
+          >
+            <strong>B</strong>
+          </button>
+
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoFecha"
+            data-comando="italic"
+            title="Cursiva"
+          >
+            <em>I</em>
+          </button>
+
+          <button
+            type="button"
+            class="boton-formato"
+            data-editor="textoFecha"
+            data-comando="underline"
+            title="Subrayado"
+          >
+            <u>U</u>
+          </button>
+        </div>
+
+        <div
+          id="textoFecha"
+          class="editor-texto"
+          contenteditable="true"
+          spellcheck="true"
+        >13 de julio de 2026</div>
+
+        <div class="panel-controles">
+
+          <div class="grupo-control">
+            <label for="alineacionFecha">
+              Alineación
+            </label>
+
+            <select id="alineacionFecha">
+              <option value="left">
+                Izquierda
+              </option>
+
+              <option
+                value="center"
+                selected
+              >
+                Centro
+              </option>
+
+              <option value="right">
+                Derecha
+              </option>
+
+              <option value="justify">
+                Justificado
+              </option>
+            </select>
+          </div>
+
+          <div class="grupo-control">
+            <label for="tamanoFecha">
+              Tamaño
+            </label>
+
+            <div class="control-tamano">
+              <input
+                type="range"
+                id="tamanoFecha"
+                min="2"
+                max="40"
+                value="10"
+              >
+
+              <input
+                type="number"
+                id="tamanoFechaNumero"
+                min="2"
+                max="40"
+                value="10"
+              >
+
+              <span>px</span>
+            </div>
+          </div>
+
+          <div class="grupo-control">
+            <label for="colorFecha">
+              Color
+            </label>
+
+            <input
+              type="color"
+              id="colorFecha"
+              value="#333333"
+            >
+          </div>
+
+          <div class="grupo-control">
+            <label for="fuenteFecha">
+              Tipo de letra
+            </label>
+
+            <select id="fuenteFecha">
+              <option value="Arial">
+                Arial
+              </option>
+
+              <option value="Georgia">
+                Georgia
+              </option>
+
+              <option value="Verdana">
+                Verdana
+              </option>
+
+              <option value="Times New Roman">
+                Times New Roman
+              </option>
+
+              <option value="Courier New">
+                Courier New
+              </option>
+            </select>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PLANTILLA -->
+      <section class="bloque-editor">
+        <h3>Plantilla y vista previa</h3>
+
+        <label
+          class="titulo-campo"
+          for="subirPlantilla"
+        >
+          Plantilla del certificado:
+        </label>
+
+        <input
+          type="file"
+          id="subirPlantilla"
+          accept="image/png,image/jpeg"
+        >
+
+        <div class="certificado">
+
+          <img
+            id="plantilla"
+            alt="Plantilla del certificado"
+          >
+
+          <h2 id="resultado">
+            Aquí aparecerá el nombre
+          </h2>
+
+          <div id="contenidoCertificado">
+            Por haber participado satisfactoriamente en esta actividad.
+          </div>
+
+          <div id="contenidoCertificadoDos">
+            Este certificado reconoce su dedicación y compromiso.
+          </div>
+
+          <div id="fechaCertificado">
+            13 de julio de 2026
+          </div>
+
+        </div>
+
+        <div class="fila-navegacion">
+          <button
+            type="button"
+            id="certificadoAnterior"
+            disabled
+          >
+            ← Certificado anterior
+          </button>
+
+          <button
+            type="button"
+            id="certificadoSiguiente"
+            disabled
+          >
+            Siguiente certificado →
+          </button>
+        </div>
+
+        <div class="fila-descargas">
+          <button
+            type="button"
+            id="descargar"
+          >
+            Descargar certificado
+          </button>
+
+          <button
+            type="button"
+            id="descargarTodos"
+            disabled
+          >
+            Descargar todos los certificados
+          </button>
+        </div>
+
+        <p id="estadoDescarga"></p>
+      </section>
+
+    </div>
+
+    <!-- Librería para leer Excel -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"
+    ></script>
+
+    <!-- Librería para convertir el certificado en imagen -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"
+    ></script>
+
+    <!-- Librería para crear el ZIP -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"
+    ></script>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
