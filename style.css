@@ -1001,29 +1001,13 @@ input[type="file"] {
 .panel-editor select {
   max-width: 100%;
 }
-.logo-app{
-
-  display:block;
-
-  width:20px;
-
-  height:auto;
-
-  margin:0 auto 12px;
-
-}
-.logo-app{
-
-  display:block;
-
-  width:20px;
-
-  height:auto;
-
-  margin:0 auto 12px;
-
-  filter: drop-shadow(0 4px 10px rgba(0,109,165,.12));
-
+.logo-app {
+  display: block;
+  width: 90px !important;
+  max-width: 90px !important;
+  height: 90px !important;
+  object-fit: contain;
+  margin: 14px auto 8px;
 }
 /* ======================================================
    MENSAJE DE BIENVENIDA
